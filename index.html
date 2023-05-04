@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Animal Sounds</title>
+  <style>
+    body{background:url(images/background.png);margin:0;padding:0;height:calc(100vh - 120px);}
+    .grid{display:grid;grid:repeat(3,1fr)/repeat(3,1fr);grid-gap:0;justify-items:center;align-items:center;height:calc(100vh - 180px);max-height:calc(100vh - 180px);padding-bottom:120px;min-height:480px;}
+    button{background:#fff;border:8px solid pink;border-radius:50%;width:150px;height:150px;box-shadow:0 4px 8px rgba(0,0,0,.4);margin:0;padding:0}
+    button:active{box-shadow:inset 0 4px 8px rgba(0,0,0,.4)}
+    button img{width:100%;height:100%;object-fit:cover;border-radius:50%}
+    .logo{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);cursor:pointer;}
+    @media (max-width: 600px) {.grid{grid-template:repeat(4,1fr)/repeat(3,1fr);}}
+  </style>
+  <script>
+    var s={cat:null,dog:null,cow:null,sheep:null,elephant:null,chicken:null,logo:null,monkey:null,horse:null,pig:null},cA=null;
+
+    function lS(a) {
+      var audio = new Audio("file:///C:/Users/nites/Desktop/Animal App/sounds/" + a + ".wav");
+      if (a === 'cow') audio.volume = 0.7;
+      audio.oncanplaythrough = function() {s[a] = audio;};
+    }
+
+    function pS(a) {
+      if (cA) {cA.pause();cA.currentTime = 0;cA = null;}
+      if (!s[a]) return;
+      var audio = s[a];
+      audio.play();
+      audio.onended = function() {cA = null;};
+      if (a === 'dog') setTimeout(function() {audio.pause();audio.currentTime = 0;}, 2500);
+      cA = audio;
+    }
+
+    window.onload = function() {['cat','dog','cow','sheep','elephant','chicken','logo','monkey','horse','pig'].forEach(lS);};
+  </script>
+</head>
+<body>
+  <div class=grid>
+    <button onclick=pS('cat')><img src=images/cat.png></button>
+    <button onclick=pS('dog')><img src=images/dog.png></button>
+    <button onclick=pS('cow')><img src=images/cow.png></button>
+    <button onclick=pS('sheep')><img src=images/sheep.png></button>
+    <button onclick=pS('elephant')><img src=images/elephant.png></button>
+    <button onclick=pS('chicken')><img src=images/chicken.png></button>
+    <button onclick=pS('monkey')><img src=images/monkey.png></button>
+    <button onclick=pS('horse')><img src=images/horse.png></button>
+    <button onclick=pS('pig')><img src=images/pig.png></button>
+  </div>
+  <img class="logo" src="images/logo.png" alt="Logo" onclick="pS('logo')">
+</body>
+</html>
+
+
